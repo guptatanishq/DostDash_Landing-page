@@ -8,7 +8,7 @@ export function registerGsapPlugins() {
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({
     limitCallbacks: true,
-    ignoreMobileResize: true,
+    ignoreMobileResize: false,
   });
   registered = true;
 }

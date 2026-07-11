@@ -220,8 +220,12 @@ export function SplitJourneyView({ layout = "split", preview = false }: SplitJou
         </PanelShell>
       </div>
 
-      {!isStacked && (
-        <div className="split-journey-connector absolute left-1/2 top-0 z-20 flex h-full w-px -translate-x-1/2 flex-col items-center justify-center">
+      {!preview && (
+        <div
+          className={`split-journey-connector absolute left-1/2 top-0 z-20 flex h-full w-px -translate-x-1/2 flex-col items-center justify-center ${
+            isStacked ? "pointer-events-none opacity-0" : ""
+          }`}
+        >
           <div className="split-connector-line absolute inset-y-8 w-px bg-white/15" />
           <div className="split-connector-bridge absolute left-1/2 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-orange-400 via-white to-teal-400 opacity-0" />
 

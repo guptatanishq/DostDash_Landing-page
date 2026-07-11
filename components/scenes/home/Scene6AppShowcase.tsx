@@ -49,7 +49,7 @@ function activateDot(
 export function Scene6AppShowcase() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
   const panelRef = useRef<HTMLDivElement>(null);
   const showcaseRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLParagraphElement>(null);
@@ -137,7 +137,7 @@ export function Scene6AppShowcase() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const copy = APP_SCREENS.map((s) => s.label).join(" → ");
 
@@ -147,10 +147,10 @@ export function Scene6AppShowcase() {
       scene={6}
       copy={copy}
       desktop={
-        <SceneTrack ref={trackRef} scene={6} className="relative h-[420vh]">
+        <SceneTrack ref={trackRef} scene={6} baseVh={420}>
           <div
             ref={panelRef}
-            className="story-panel scene-panel relative h-screen w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle()}
           >
             <SceneGrain />
@@ -162,7 +162,7 @@ export function Scene6AppShowcase() {
               The app behind every delivery
             </p>
 
-            <div ref={showcaseRef} className="absolute inset-x-4 inset-y-20 md:inset-x-8 md:inset-y-24">
+            <div ref={showcaseRef} className="absolute inset-x-3 inset-y-16 sm:inset-x-4 sm:inset-y-20 md:inset-x-8 md:inset-y-24">
               <FloatingDeviceShowcase />
             </div>
 

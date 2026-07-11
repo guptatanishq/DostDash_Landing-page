@@ -23,7 +23,7 @@ const COPY =
 export function Scene3SolutionReveal() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
   const panelRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
   const chaosRef = useRef<HTMLDivElement>(null);
@@ -176,7 +176,7 @@ export function Scene3SolutionReveal() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const mobileVisual = (
     <div className="relative flex h-full flex-col items-center justify-center gap-4 p-6">
@@ -193,10 +193,10 @@ export function Scene3SolutionReveal() {
       variant="teal"
       copy={COPY}
       desktop={
-        <SceneTrack ref={trackRef} scene={3} className="relative h-[320vh]">
+        <SceneTrack ref={trackRef} scene={3} baseVh={320}>
           <div
             ref={panelRef}
-            className="story-panel scene-panel relative h-screen w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle("teal")}
           >
             <SceneGrain />

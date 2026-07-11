@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
+import { CinematicIntroProvider } from "@/components/providers/CinematicIntroProvider";
 import { SiteFooter } from "@/components/design/SiteFooter";
+import { SiteHeader } from "@/components/design/SiteHeader";
 import { SkipLink } from "@/components/design/SkipLink";
 import "./globals.css";
 
@@ -30,9 +32,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${fraunces.variable} font-sans antialiased`}>
         <ScrollProvider>
-          <SkipLink />
-          {children}
-          <SiteFooter />
+          <CinematicIntroProvider>
+            <SkipLink />
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </CinematicIntroProvider>
         </ScrollProvider>
       </body>
     </html>

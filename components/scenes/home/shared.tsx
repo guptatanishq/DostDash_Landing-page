@@ -38,12 +38,13 @@ export function StaticSceneBlock({ scene, copy, children }: StaticSceneBlockProp
 
 export const SceneTrack = forwardRef<
   HTMLElement,
-  { scene: number; children: ReactNode; className?: string }
->(function SceneTrack({ scene, children, className = "" }, ref) {
+  { scene: number; children: ReactNode; className?: string; baseVh?: number }
+>(function SceneTrack({ scene, children, className = "", baseVh }, ref) {
   return (
     <section
       ref={ref}
       aria-label={`Scene ${scene}`}
+      data-track-vh={baseVh}
       className={`story-track relative ${className}`}
     >
       {children}

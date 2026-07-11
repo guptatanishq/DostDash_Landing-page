@@ -41,7 +41,8 @@ function activateSyncDot(
 export function Scene5SplitJourney() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
+  const isStackedLayout = tier === "phone-portrait";
   const panelRef = useRef<HTMLDivElement>(null);
   const splitRef = useRef<HTMLDivElement>(null);
   const communityRef = useRef<HTMLParagraphElement>(null);
@@ -135,7 +136,7 @@ export function Scene5SplitJourney() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const copy =
     "Customer creates a request while a traveler publishes a route — two journeys, one delivery, stronger together.";
@@ -147,10 +148,10 @@ export function Scene5SplitJourney() {
       variant="dual"
       copy={copy}
       desktop={
-        <SceneTrack ref={trackRef} scene={5} className="relative h-[360vh]">
+        <SceneTrack ref={trackRef} scene={5} baseVh={360}>
           <div
             ref={panelRef}
-            className="story-panel scene-panel relative h-screen w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle("dual")}
           >
             <SceneGrain />
@@ -159,8 +160,8 @@ export function Scene5SplitJourney() {
               Two people · One city · One delivery
             </p>
 
-            <div ref={splitRef} className="absolute inset-x-4 inset-y-24 md:inset-x-12 md:inset-y-28">
-              <SplitJourneyView />
+            <div ref={splitRef} className="absolute inset-x-3 inset-y-20 sm:inset-x-4 sm:inset-y-24 md:inset-x-12 md:inset-y-28">
+              <SplitJourneyView layout={isStackedLayout ? "stacked" : "split"} />
             </div>
 
             <div className="absolute bottom-10 left-0 right-0 z-20 px-4 md:bottom-14">

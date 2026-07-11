@@ -1,21 +1,17 @@
 "use client";
 
-import { useEffect, useState, type RefObject } from "react";
+import type { RefObject } from "react";
+import { useStoryScroll } from "@/components/providers/StoryScrollProvider";
+import { useStoryViewport } from "@/hooks/useStoryViewport";
+import { useSceneScrollMode } from "./useSceneScrollMode";
 
 /**
  * Returns true once scroll-driven scene animations are allowed to initialize.
- * Immediate when enabled — no IntersectionObserver delay (that caused empty
- * scroll gaps before ScrollTrigger pinned sections).
+ * No async delay — must be synchronous so useLayoutEffect can pin on first frame.
  */
 export function useSceneActivation(
   _ref: RefObject<HTMLElement | null>,
   enabled: boolean,
 ): boolean {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    setIsActive(enabled);
-  }, [enabled]);
-
-  return isActive;
+  return enabled;
 }

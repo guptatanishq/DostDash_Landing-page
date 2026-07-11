@@ -46,7 +46,7 @@ function crossfadeStage(
 export function Scene4HowItWorks() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
   const panelRef = useRef<HTMLDivElement>(null);
   const mapWrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<SVGSVGElement>(null);
@@ -173,7 +173,7 @@ export function Scene4HowItWorks() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const copy = STAGES.join(" → ");
 
@@ -183,10 +183,10 @@ export function Scene4HowItWorks() {
       scene={4}
       copy={copy}
       desktop={
-        <SceneTrack ref={trackRef} scene={4} className="relative h-[400vh]">
+        <SceneTrack ref={trackRef} scene={4} baseVh={400}>
           <div
             ref={panelRef}
-      className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle()}
           >
             <SceneGrain />
@@ -198,8 +198,8 @@ export function Scene4HowItWorks() {
               How DostDrop works
             </p>
 
-            <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center gap-6 px-6 pb-28 pt-28 md:flex-row md:items-center md:gap-12 md:px-10 md:pb-24">
-              <div ref={mapWrapRef} className="relative w-full max-w-2xl flex-1 origin-center">
+            <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center gap-4 px-4 pb-20 pt-20 sm:gap-6 sm:px-6 sm:pb-24 sm:pt-24 md:flex-row md:items-center md:gap-12 md:px-10 md:pb-24 md:pt-28">
+              <div ref={mapWrapRef} className="relative w-full max-w-2xl flex-1 origin-center max-h-[42vh] sm:max-h-none">
                 <JourneyMapCanvas ref={canvasRef} />
               </div>
 

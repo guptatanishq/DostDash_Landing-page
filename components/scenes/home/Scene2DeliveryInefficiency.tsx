@@ -20,7 +20,7 @@ const COPY_LINE_2 = "even when someone is already going there.";
 export function Scene2DeliveryInefficiency() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
   const panelRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
   const congestionRef = useRef<HTMLDivElement>(null);
@@ -138,7 +138,7 @@ export function Scene2DeliveryInefficiency() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const mobileVisual = (
     <div className="relative h-full w-full">
@@ -154,10 +154,10 @@ export function Scene2DeliveryInefficiency() {
       variant="teal"
       copy={`${COPY_LINE_1} ${COPY_LINE_2}`}
       desktop={
-        <SceneTrack ref={trackRef} scene={2} className="relative h-[300vh]">
+        <SceneTrack ref={trackRef} scene={2} baseVh={300}>
           <div
             ref={panelRef}
-            className="story-panel scene-panel relative h-screen w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle("teal")}
           >
             <SceneGrain />

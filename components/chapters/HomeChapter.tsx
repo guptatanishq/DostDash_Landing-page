@@ -3,7 +3,8 @@
 import { CinematicLoader } from "@/components/design/CinematicLoader";
 import { useScrollContext } from "@/components/providers/ScrollProvider";
 import { StoryScrollProvider } from "@/components/providers/StoryScrollProvider";
-import { useCinematicIntro } from "@/hooks/useCinematicIntro";
+import { useCinematicIntroContext } from "@/components/providers/CinematicIntroProvider";
+import { useStoryViewport } from "@/hooks/useStoryViewport";
 import { refreshScrollEngine } from "@/lib/scroll-engine";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { Scene2DeliveryInefficiency } from "@/components/scenes/home/Scene2DeliveryInefficiency";
@@ -17,8 +18,9 @@ import { Scene9ClosingMovement } from "@/components/scenes/home/Scene9ClosingMov
 import { useLayoutEffect } from "react";
 
 export function HomeChapter() {
-  const { showIntro, completeIntro, hydrated } = useCinematicIntro();
+  const { showIntro, completeIntro, hydrated, introKey } = useCinematicIntroContext();
   const { lenis } = useScrollContext();
+  const { tier } = useStoryViewport();
   const storyReady = hydrated && !showIntro;
 
   useLayoutEffect(() => {
@@ -36,12 +38,12 @@ export function HomeChapter() {
       window.clearTimeout(t3);
       window.clearTimeout(t4);
     };
-  }, [storyReady]);
+  }, [storyReady, tier]);
 
   if (!hydrated) {
     return (
       <div
-        className="fixed inset-0"
+        className="story-booting-screen fixed inset-0 z-[150]"
         style={{
           background: "linear-gradient(180deg, #0f172a 0%, #1e293b 46%, #0f172a 100%)",
         }}
@@ -52,8 +54,14 @@ export function HomeChapter() {
 
   return (
     <StoryScrollProvider ready={storyReady}>
-      {showIntro && <CinematicLoader onComplete={completeIntro} lenis={lenis} />}
-      <main id="main" className={showIntro ? "story-experience intro-behind" : "story-experience"}>
+      {showIntro && (
+        <CinematicLoader key={introKey} onComplete={completeIntro} lenis={lenis} />
+      )}
+      <main
+        id="main"
+        data-story-tier={tier}
+        className={showIntro ? "story-experience intro-behind" : "story-experience"}
+      >
         <HeroSection animateIn={storyReady} />
         <Scene2DeliveryInefficiency />
         <Scene3SolutionReveal />

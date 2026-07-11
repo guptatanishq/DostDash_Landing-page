@@ -1,15 +1,16 @@
 "use client";
 
-import { useIsMobile } from "./useIsMobile";
 import { useReducedMotion } from "./useReducedMotion";
 
+/** Cinematic pinned scroll is enabled on all devices unless reduced-motion is on. */
 export function useSceneScrollMode() {
   const reducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
 
   return {
     reducedMotion,
-    isMobile,
-    useDesktopScroll: !reducedMotion && !isMobile,
+    useCinematicScroll: !reducedMotion,
+    /** @deprecated Use useCinematicScroll */
+    useDesktopScroll: !reducedMotion,
+    isMobile: false,
   };
 }

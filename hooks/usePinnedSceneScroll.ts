@@ -2,19 +2,26 @@
 
 import type { RefObject } from "react";
 import { useStoryScroll } from "@/components/providers/StoryScrollProvider";
+import { useStoryViewport } from "@/hooks/useStoryViewport";
 import { useSceneActivation } from "./useSceneActivation";
 import { useSceneScrollMode } from "./useSceneScrollMode";
 
-/** Gate for pinned desktop scroll scenes — waits until intro is complete. */
+/** Gate for pinned scroll scenes — waits until intro is complete. */
 export function usePinnedSceneScroll(ref: RefObject<HTMLElement | null>) {
-  const { useDesktopScroll } = useSceneScrollMode();
+  const { useCinematicScroll } = useSceneScrollMode();
   const { ready } = useStoryScroll();
-  return useSceneActivation(ref, useDesktopScroll && ready);
+  const { tier } = useStoryViewport();
+  const active = useSceneActivation(ref, useCinematicScroll && ready);
+
+  return { active, tier };
 }
 
-/** Gate for flow/reveal desktop scroll scenes */
+/** Gate for flow/reveal scroll scenes */
 export function useFlowSceneScroll(ref: RefObject<HTMLElement | null>) {
-  const { useDesktopScroll, reducedMotion } = useSceneScrollMode();
+  const { useCinematicScroll, reducedMotion } = useSceneScrollMode();
   const { ready } = useStoryScroll();
-  return useSceneActivation(ref, useDesktopScroll && ready && !reducedMotion);
+  const { tier } = useStoryViewport();
+  const active = useSceneActivation(ref, useCinematicScroll && ready && !reducedMotion);
+
+  return { active, tier };
 }

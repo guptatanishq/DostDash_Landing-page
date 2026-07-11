@@ -34,7 +34,7 @@ export function storyPinScrollTrigger(
     trigger,
     pin: panel,
     start: "top top" as const,
-    end: () => `+=${Math.max(trigger.offsetHeight - window.innerHeight, window.innerHeight * 0.25)}`,
+    end: "bottom bottom" as const,
     scrub: STORY_SCRUB,
     ...STORY_PIN,
   };
@@ -49,6 +49,15 @@ export function storyPinConfig() {
     ...STORY_PIN,
   };
 }
+
+export const STORY_TRACK_BASE_VH = {
+  2: 300,
+  3: 320,
+  4: 400,
+  5: 360,
+  6: 420,
+  7: 400,
+} as const;
 
 export type StoryPanelVariant = "default" | "warm" | "teal" | "dual" | "impact";
 

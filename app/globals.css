@@ -214,8 +214,27 @@ body {
 }
 
 /* ─── Cinematic intro loader ─── */
-body.intro-active {
+body.intro-active,
+body.story-booting {
   overflow: hidden;
+}
+
+body.intro-active .site-footer,
+body.story-booting .site-footer,
+body:has(.story-booting-screen) .site-footer,
+body:has(.intro-behind) .site-footer {
+  display: none;
+}
+
+/* ─── Site header chrome ─── */
+.site-header {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.site-header__brand:focus-visible,
+.site-header__search:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.45);
 }
 
 .intro-overlay {
@@ -296,6 +315,37 @@ body.intro-active {
   color: #e2e8f0;
 }
 
+/* Scroll runways — height sets pin duration; scales per device via CSS only */
+.story-track[data-track-vh="300"] { height: 300vh; min-height: 300vh; }
+.story-track[data-track-vh="320"] { height: 320vh; min-height: 320vh; }
+.story-track[data-track-vh="360"] { height: 360vh; min-height: 360vh; }
+.story-track[data-track-vh="400"] { height: 400vh; min-height: 400vh; }
+.story-track[data-track-vh="420"] { height: 420vh; min-height: 420vh; }
+
+@media (max-width: 1023px) {
+  .story-track[data-track-vh="300"] { height: 246vh; min-height: 246vh; }
+  .story-track[data-track-vh="320"] { height: 262vh; min-height: 262vh; }
+  .story-track[data-track-vh="360"] { height: 295vh; min-height: 295vh; }
+  .story-track[data-track-vh="400"] { height: 328vh; min-height: 328vh; }
+  .story-track[data-track-vh="420"] { height: 344vh; min-height: 344vh; }
+}
+
+@media (max-width: 639px) {
+  .story-track[data-track-vh="300"] { height: 216vh; min-height: 216vh; }
+  .story-track[data-track-vh="320"] { height: 230vh; min-height: 230vh; }
+  .story-track[data-track-vh="360"] { height: 259vh; min-height: 259vh; }
+  .story-track[data-track-vh="400"] { height: 288vh; min-height: 288vh; }
+  .story-track[data-track-vh="420"] { height: 302vh; min-height: 302vh; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .story-track[data-track-vh="300"] { height: 165vh; min-height: 165vh; }
+  .story-track[data-track-vh="320"] { height: 176vh; min-height: 176vh; }
+  .story-track[data-track-vh="360"] { height: 198vh; min-height: 198vh; }
+  .story-track[data-track-vh="400"] { height: 220vh; min-height: 220vh; }
+  .story-track[data-track-vh="420"] { height: 231vh; min-height: 231vh; }
+}
+
 .story-experience .story-track.story-track--flow {
   margin-top: -4vh;
 }
@@ -303,6 +353,40 @@ body.intro-active {
 .story-panel {
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+/* Responsive cinematic layouts — phone, tablet, landscape */
+[data-story-tier="phone-portrait"] .story-subtitle {
+  font-size: clamp(1rem, 4.5vw, 1.35rem);
+}
+
+[data-story-tier="phone-landscape"] .story-panel {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+[data-story-tier="phone-landscape"] .story-subtitle {
+  font-size: clamp(0.875rem, 3.5vw, 1.125rem);
+}
+
+[data-story-tier="phone-portrait"] .device-showcase--story,
+[data-story-tier="phone-landscape"] .device-showcase--story {
+  transform: scale(0.9);
+  transform-origin: center center;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .story-panel .story-display {
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+  }
+
+  .hero-section .story-display {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+  }
+
+  .story-panel [class*="inset-y-"] {
+    top: 3.5rem;
+    bottom: 3.5rem;
+  }
 }
 
 .story-flow-section {

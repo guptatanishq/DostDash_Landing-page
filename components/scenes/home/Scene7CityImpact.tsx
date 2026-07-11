@@ -59,7 +59,7 @@ function animateCounter(
 export function Scene7CityImpact() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = usePinnedSceneScroll(trackRef);
+  const { active: sceneActive, tier } = usePinnedSceneScroll(trackRef);
   const panelRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<SVGSVGElement>(null);
@@ -245,7 +245,7 @@ export function Scene7CityImpact() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive]);
+  }, [sceneActive, tier]);
 
   const copy =
     "A city in motion — journeys connected, commuters earning, empty miles avoided, cleaner air together.";
@@ -257,10 +257,10 @@ export function Scene7CityImpact() {
       variant="impact"
       copy={copy}
       desktop={
-        <SceneTrack ref={trackRef} scene={7} className="relative h-[400vh]">
+        <SceneTrack ref={trackRef} scene={7} baseVh={400}>
           <div
             ref={panelRef}
-            className="story-panel scene-panel relative h-screen w-full overflow-hidden"
+            className="story-panel scene-panel relative h-screen min-h-[100dvh] w-full overflow-hidden"
             style={storyPanelStyle("impact")}
           >
             <SceneGrain />

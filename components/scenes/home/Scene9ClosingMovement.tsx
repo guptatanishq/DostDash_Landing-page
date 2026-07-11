@@ -18,7 +18,7 @@ const HEADLINE = "Join the Movement.";
 export function Scene9ClosingMovement() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = useFlowSceneScroll(trackRef);
+  const { active: sceneActive, tier } = useFlowSceneScroll(trackRef);
   const messageRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -67,7 +67,7 @@ export function Scene9ClosingMovement() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive, reducedMotion]);
+  }, [sceneActive, tier, reducedMotion]);
 
   const hidden = reducedMotion ? "" : "opacity-0";
 

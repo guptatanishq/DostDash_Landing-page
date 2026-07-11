@@ -114,7 +114,7 @@ export function HeroSection({ animateIn = true }: HeroSectionProps) {
     <section
       ref={sectionRef}
       aria-label="DostDrop hero"
-      className="hero-section relative h-screen min-h-[640px] w-full overflow-hidden"
+      className="hero-section relative h-screen min-h-[100dvh] w-full overflow-hidden"
     >
       <p className="sr-only">
         Someone is Already Going Your Way. Access what&apos;s not near you through people who
@@ -151,8 +151,8 @@ export function HeroSection({ animateIn = true }: HeroSectionProps) {
       />
       <SceneGrain />
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl items-center px-6 pb-16 pt-24 md:px-10 lg:px-14">
-        <div className="grid w-full items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl items-center px-5 pb-12 pt-20 sm:px-6 sm:pb-16 sm:pt-24 md:px-10 lg:px-14">
+        <div className="grid w-full items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
           <div className="max-w-xl">
             <h1
               ref={headlineRef}
@@ -190,12 +190,12 @@ export function HeroSection({ animateIn = true }: HeroSectionProps) {
 
           <HeroPhoneMockups
             ref={phonesRef}
-            className="mx-auto w-full max-w-md scale-[0.82] sm:scale-90 md:max-w-none md:scale-100"
+            className="mx-auto w-full max-w-xs scale-[0.78] sm:max-w-md sm:scale-90 md:max-w-none md:scale-100"
           />
         </div>
       </div>
 
-      <div className="hero-scroll-hint pointer-events-none absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block">
+      <div className="hero-scroll-hint pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2 sm:bottom-8">
         <div className="flex flex-col items-center gap-2 text-white/40">
           <span className="text-[10px] font-medium uppercase tracking-[0.2em]">Scroll</span>
           <div className="h-8 w-px bg-gradient-to-b from-white/40 to-transparent" />

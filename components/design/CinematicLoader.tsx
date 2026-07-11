@@ -212,7 +212,7 @@ export function CinematicLoader({ onComplete, lenis }: CinematicLoaderProps) {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, #0f172a 0%, #1e293b 42%, #334155 100%)",
+            "linear-gradient(180deg, #0f172a 0%, #1e293b 46%, #0f172a 100%)",
         }}
       />
       <SceneGrain />

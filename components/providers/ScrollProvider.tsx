@@ -1,6 +1,5 @@
 "use client";
 
-import Lenis from "lenis";
 import {
   createContext,
   useContext,
@@ -12,8 +11,11 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   createScrollEngine,
   destroyScrollEngine,
+  initNativeScrollEngine,
   refreshScrollEngine,
+  shouldUseSmoothScroll,
 } from "@/lib/scroll-engine";
+import type Lenis from "lenis";
 
 type ScrollContextValue = {
   lenis: Lenis | null;
@@ -40,18 +42,31 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const instance = createScrollEngine();
-    setLenis(instance);
-    document.documentElement.classList.add("lenis", "lenis-smooth");
+    const useLenis = shouldUseSmoothScroll();
+    let teardownNative: (() => void) | undefined;
+    let instance: Lenis | null = null;
+
+    if (useLenis) {
+      instance = createScrollEngine();
+      setLenis(instance);
+      document.documentElement.classList.add("lenis", "lenis-smooth");
+    } else {
+      teardownNative = initNativeScrollEngine();
+      setLenis(null);
+      document.documentElement.classList.remove("lenis", "lenis-smooth");
+    }
 
     const onResize = () => refreshScrollEngine();
     window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", onResize);
 
     const t = window.setTimeout(() => refreshScrollEngine(), 400);
 
     return () => {
       window.clearTimeout(t);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+      teardownNative?.();
       destroyScrollEngine(instance);
       setLenis(null);
       document.documentElement.classList.remove("lenis", "lenis-smooth");

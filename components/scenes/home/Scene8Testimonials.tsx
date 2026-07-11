@@ -14,7 +14,7 @@ import { SceneTrack } from "./shared";
 export function Scene8Testimonials() {
   const { reducedMotion } = useSceneScrollMode();
   const trackRef = useRef<HTMLElement>(null);
-  const sceneActive = useFlowSceneScroll(trackRef);
+  const { active: sceneActive, tier } = useFlowSceneScroll(trackRef);
   const titleRef = useRef<HTMLParagraphElement>(null);
   const subtitleRef = useRef<HTMLHeadingElement>(null);
 
@@ -84,7 +84,7 @@ export function Scene8Testimonials() {
 
     scheduleSceneScrollRefresh();
     return () => ctx.revert();
-  }, [sceneActive, reducedMotion]);
+  }, [sceneActive, tier, reducedMotion]);
 
   const copy = "Real people across Bengaluru — customers and travelers sharing the city.";
 
